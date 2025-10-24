@@ -1,10 +1,35 @@
-from flask import Blueprint, abort, make_response
-from app.models.planet import planets
+from flask import Blueprint, abort, make_response, request
+from app.models.planet import Planet
+from ..db import db
 
 planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
 
+@planets_bp.post("")
+def create_planet():
+    request_body = request.get_json()
+    name = request_body["name"]
+    description = request_body["description"]
+    radius = request_body["radius"]
+
+    new_planet = Planet(name=name, description=description, radius=radius)
+    db.session.add(new_planet)
+    db.session.commit()
+
+    response = {
+        "id": new_planet.id,
+        "name": new_planet.name,
+        "despcription": new_planet.description,
+        "radius": new_planet.radius
+    }
+
+    return response, 201
+
+
 @planets_bp.get("")
 def get_all_planet():
+    query = db.select(Planet).order_by(Planet.id)
+    planets = db.session.scalars(query)
+
     result_list = []
 
     for planet in planets:
@@ -31,6 +56,9 @@ def get_planet(id):
     return planet_dict
 
 def validate_planet(id):
+    query = db.select(Planet).order_by(Planet.id)
+    planets = db.session.scalars(query)
+    
     try:
         id = int(id)
     except ValueError:

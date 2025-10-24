@@ -6,7 +6,7 @@ Complete the following setup steps of the Solar System API repo:
 1. Activate the virtual environment
 1. Create the database `solar_system_development`
     * *Every member of the group must create the database on their computer*
-1. Setup the `Planet` model with the attributes `id`, `name`, and `description`, and one additional attribute
+1. Setup the `Planet` model with the attributes `id`, `name`, and `description`, and radius
 1. Create a migration to add a table for the `Planet` model and then apply it. 
     * *Confirm that the `planet` table has been created as expected in postgres*.
 
