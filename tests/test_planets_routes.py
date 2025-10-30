@@ -20,3 +20,12 @@ def test_one_planet(client, one_saved_planet):
         "radius": 6319,
         "description": "home planet"
     }
+
+def test_one_planet_return_empty(client):
+    # ACT
+    response = client.get("/planets/1")
+    response_body = response.get_json()
+
+    # Assert
+    assert response.status_code == 404
+    assert response_body == []
