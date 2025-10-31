@@ -18,7 +18,7 @@ def create_planet():
     response = {
         "id": new_planet.id,
         "name": new_planet.name,
-        "despcription": new_planet.description,
+        "description": new_planet.description,
         "radius": new_planet.radius
     }
 
@@ -85,7 +85,9 @@ def validate_planet(id):
         if planet.id == id:
             return planet
 
-    response = {"message": f"Planet id ({id}) is not found."}
+    response = []
+    
+    #{"message": f"Planet id ({id}) is not found."}
     abort(make_response(response, 404))
 
 # 2. ... with valid planet data to update one existing `planet` and get a success response, so that I know the API updated the `planet` data.
