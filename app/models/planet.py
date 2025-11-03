@@ -22,3 +22,21 @@ class Planet(db.Model):
     name: Mapped[str]
     description: Mapped[str]
     radius: Mapped[int]
+
+    def to_dict(self):
+        model_dict = {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "radius": self.radius
+        }
+
+        return model_dict
+
+    @classmethod
+    def from_dict(cls, data_dict):
+        return cls(name = data_dict["name"],
+                   description = data_dict["description"],
+                   radius = data_dict["radius"]
+                   )
+    

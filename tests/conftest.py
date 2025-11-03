@@ -37,7 +37,7 @@ def one_saved_planet(app):
     #Arrange
     one_planet = Planet(
         name="Earth",
-        radius="6319",
+        radius=6319,
         description="home planet"
     )
 
