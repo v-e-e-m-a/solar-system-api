@@ -9,7 +9,7 @@ class Moon(db.Model):
     description: Mapped[str]
     radius: Mapped[int]
     planet_id: Mapped[Optional[int]] = mapped_column(ForeignKey("planet.id"))
-    planet: Mapped[Optional["Planet"]] = relationship("Planet", back_populates="moons")
+    planet: Mapped[Optional["Planet"]] = relationship(back_populates="moons")
 
     def to_dict(self):
         model_dict = {
@@ -17,10 +17,8 @@ class Moon(db.Model):
             "name": self.name,
             "description": self.description,
             "radius": self.radius,
+            "planet": self.planet.name if self.planet_id else None
         }
-
-        if self.planet:
-            model_dict["planet"] = self.planet
 
         return model_dict
     
@@ -28,5 +26,6 @@ class Moon(db.Model):
     def from_dict(cls, data_dict):
         return cls(name = data_dict["name"],
                    description = data_dict["description"],
-                   radius = data_dict["radius"]
+                   radius = data_dict["radius"],
+                   planet_id = data_dict.get("planet_id")
                    )

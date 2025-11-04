@@ -44,4 +44,3 @@ def one_saved_planet(app):
     db.session.add(one_planet)
     db.session.commit()
 
-    

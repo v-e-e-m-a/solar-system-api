@@ -26,5 +26,6 @@ class Planet(db.Model):
         return cls(name = data_dict["name"],
                    description = data_dict["description"],
                    radius = data_dict["radius"]
+                   # moon_id = data_dict.get("moon_id", None)
                    )
     

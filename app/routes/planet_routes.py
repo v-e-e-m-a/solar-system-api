@@ -1,6 +1,7 @@
 from flask import Blueprint, abort, make_response, request, Response
 from app.models.planet import Planet
-from .route_utilities import validate_model
+from app.models.moon import Moon
+from .route_utilities import validate_model, create_model
 from ..db import db
 
 planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
@@ -78,3 +79,23 @@ def delete_planet(id):
     db.session.commit()
 
     return Response(status=204, mimetype="application/json")
+
+@planets_bp.post("/<id>/moons")
+def add_moon_to_existing_planet(id):
+    planet = validate_model(Planet, id)
+    
+    request_body = request.get_json()
+    print("!!!!!!!!!!!!")
+    request_body["planet_id"] = planet.id
+    print(request_body)
+    # request_body["planet"] = planet.name
+
+    return create_model(Moon, request_body)
+
+@planets_bp.get("/<id>/moons")
+def get_all_moons_for_one_planet(id):
+    planet = validate_model(Planet, id)
+    
+    moons = [moon.to_dict() for moon in planet.moons]
+
+    return moons
