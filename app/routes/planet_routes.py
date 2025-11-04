@@ -9,21 +9,9 @@ planets_bp = Blueprint("planets_bp", __name__, url_prefix="/planets")
 def create_planet():
     request_body = request.get_json()
 
-
-    # name = request_body["name"]
-    # description = request_body["description"]
-    # radius = request_body["radius"]
-
     new_planet = Planet.from_dict(request_body)
     db.session.add(new_planet)
     db.session.commit()
-
-    # response = {
-    #     "id": new_planet.id,
-    #     "name": new_planet.name,
-    #     "description": new_planet.description,
-    #     "radius": new_planet.radius
-    # }
 
     response = new_planet.to_dict()
 
@@ -67,33 +55,7 @@ def get_all_planet():
 def get_planet(id):
     planet = validate_model(Planet, id)
     
-    # planet_dict = dict(
-    #     id = planet.id,
-    #     name = planet.name,
-    #     description = planet.description,
-    #     radius = planet.radius
-    # )
-    
     return planet.to_dict()
-
-# def validate_model(Planet, id):
-#     query = db.select(Planet).order_by(Planet.id)
-#     planets = db.session.scalars(query)
-    
-#     try:
-#         id = int(id)
-#     except ValueError:
-#         invalid = {"message": f" Planet id ({id}) is invalid."}
-#         abort(make_response(invalid, 400))
-
-#     for planet in planets:
-#         if planet.id == id:
-#             return planet
-
-#     response = []
-    
-#     #{"message": f"Planet id ({id}) is not found."}
-#     abort(make_response(response, 404))
 
 # 2. ... with valid planet data to update one existing `planet` and get a success response, so that I know the API updated the `planet` data.
 @planets_bp.put("/<id>")
