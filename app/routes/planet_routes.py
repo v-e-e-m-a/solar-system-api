@@ -85,10 +85,7 @@ def add_moon_to_existing_planet(id):
     planet = validate_model(Planet, id)
     
     request_body = request.get_json()
-    print("!!!!!!!!!!!!")
     request_body["planet_id"] = planet.id
-    print(request_body)
-    # request_body["planet"] = planet.name
 
     return create_model(Moon, request_body)
 
