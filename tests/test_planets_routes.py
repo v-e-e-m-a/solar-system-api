@@ -11,6 +11,7 @@ def test_get_one_planet(client, one_saved_planet):
     # ACT
     response = client.get("/planets/1")
     response_body = response.get_json()
+    print(response_body)
 
     # Assert
     assert response.status_code == 200
@@ -18,7 +19,8 @@ def test_get_one_planet(client, one_saved_planet):
         "id": 1,
         "name": "Earth",
         "radius": 6319,
-        "description": "home planet"
+        "description": "home planet",
+        "moons": []
     }
 
 def test_get_one_planet_return_empty(client):
@@ -46,5 +48,6 @@ def test_create_new_planet(client):
         "id": 1,
         "name": "Jupiter",
         "description": "the largest planet in our solar system",
-        "radius": 43441
+        "radius": 43441,
+        "moons": []
     }

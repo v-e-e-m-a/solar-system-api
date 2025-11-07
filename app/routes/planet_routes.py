@@ -45,7 +45,7 @@ def get_all_planet():
             name=planet.name,
             description=planet.description, 
             radius=planet.radius
-        ))
+            ))
     
     return result_list
 

@@ -13,11 +13,12 @@ class Planet(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "radius": self.radius
+            "radius": self.radius,
+            "moons": []
         }
 
-        if self.moons:
-            model_dict["moons"] = self.moons
+        # Return a list of moon names (not a generator) so the dict is JSON-serializable
+        model_dict["moons"] = [moon.name for moon in self.moons] if self.moons else []
 
         return model_dict
 
